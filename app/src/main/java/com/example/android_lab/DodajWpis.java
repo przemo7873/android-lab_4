@@ -20,8 +20,27 @@ public class DodajWpis extends AppCompatActivity {
                 new String[] {"Pies", "Kot", "Rybki"});
         Spinner gatunek = (Spinner) findViewById(R.id.gatunek);
         gatunek.setAdapter(gatunki);
-    }
 
+        Bundle extras = getIntent().getExtras();
+        try {
+            if(extras.getSerializable("element")!=null){
+                Animal zwierz = (Animal)extras.getSerializable("element");
+                EditText kolor = (EditText)findViewById(R.id.kolor);
+                EditText wielkosc = (EditText)findViewById(R.id.wielkosc);
+                EditText opis = (EditText)findViewById(R.id.opis);
+                EditText gatunek1 = (EditText)findViewById(R.id.gatunek1);
+                kolor.setText(zwierz.getKolor());
+                wielkosc.setText(Float.toString(zwierz.getWielkosc()));
+                opis.setText(zwierz.getOpis());
+                gatunek1.setText(zwierz.getGatunek());
+
+                this.modyfi_id=zwierz.getId();
+            }
+        }catch(Exception ex){
+            this.modyfi_id=0;
+        }
+    }
+    private int modyfi_id;
     public void wyslij(View view)
     {
         EditText kolor = (EditText)findViewById(R.id.kolor);
@@ -36,6 +55,7 @@ public class DodajWpis extends AppCompatActivity {
                 Float.valueOf(wielkosc.getText().toString()),
                 opis.getText().toString());
 
+        zwierze.setId(this.modyfi_id);
         Intent intencja = new Intent();
         intencja.putExtra("nowy",zwierze);
         setResult(RESULT_OK,intencja);
