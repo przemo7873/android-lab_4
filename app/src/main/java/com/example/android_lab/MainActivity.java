@@ -23,13 +23,15 @@ public class MainActivity extends AppCompatActivity {
         String[] values = new String[] { "Pies", "Kot", "Koń", "Gołąb",
         "Kruk", "Dzik", "Karp", "Osioł", "Chomik", "Mysz", "Jeż"};
         this.target = new ArrayList<String>();
+        db = new MySQLite(this);
         this.target.addAll(Arrays.asList(values));
         this.adapter = new SimpleCursorAdapter(this,
-                android.R.layout.simple_list_item_1,db.lista(),
+                android.R.layout.simple_list_item_2,
+                db.lista(),
                 new String[]{"_id","gatunek"},
                 new int[] {android.R.id.text1,android.R.id.text2},
                 SimpleCursorAdapter.IGNORE_ITEM_VIEW_TYPE);
-
+        
         ListView listview = (ListView) findViewById(R.id.listView);
         listview.setAdapter(this.adapter);
     }
@@ -55,8 +57,9 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
-            String nowy = (String) extras.get("wpis");
-            target.add(nowy);
+            Animal nowy = (Animal) extras.get("nowy");
+            this.db.dodaj(nowy);
+            adapter.changeCursor(db.lista());
             adapter.notifyDataSetChanged();
         }
     }
