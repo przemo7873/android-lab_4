@@ -22,15 +22,15 @@ public class Animal implements Serializable {
 
     @Override
     public String toString(){
-        return "Zwierze: [id=" + _id + ", gatunek=" + gatunek +
+        return "Zwierze: [_id=" + _id + ", gatunek=" + gatunek +
                 ", kolor=" + kolor + ", wielkosc=" + wielkosc + " ]";
     }
 
-    public int get_id() {
+    public int getId() {
         return _id;
     }
 
-    public void set_id(int _id) {
+    public void setId(int _id) {
         this._id = _id;
     }
 

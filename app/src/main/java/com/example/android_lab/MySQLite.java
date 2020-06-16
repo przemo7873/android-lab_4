@@ -56,7 +56,7 @@ public class MySQLite extends SQLiteOpenHelper {
         values.put("wielkosc",zwierz.getWielkosc());
         values.put("opis",zwierz.getOpis());
         int i = db.update("animals", values,
-            "_id = ?", new String[]{String.valueOf(zwierz.get_id())});
+            "_id = ?", new String[]{String.valueOf(zwierz.getId())});
         db.close();
         return i;
     }
@@ -73,13 +73,13 @@ public class MySQLite extends SQLiteOpenHelper {
                 cursor.getString(2),
                 cursor.getFloat(3),
                 cursor.getString(4));
-        zwierz.set_id(Integer.parseInt(cursor.getString(0)));
+        zwierz.setId(Integer.parseInt(cursor.getString(0)));
         return zwierz;
     }
     public Cursor lista(){
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery("Select * from animals",null);
-    }    
+    }
 
 
 }
