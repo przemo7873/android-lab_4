@@ -46,9 +46,22 @@ public class MainActivity extends AppCompatActivity {
                 Intent intencja = new Intent(getApplicationContext(),
                         DodajWpis.class);
                 intencja.putExtra("element",zwierz);
-                startActivityForResult(intencja,2);
+                startActivityForResult(intencja,2);}
+        });
+
+        listview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                TextView name = (TextView) view.findViewById(android.R.id.text1);
+                db.usun(name.getText().toString());
+                adapter.changeCursor(db.lista());
+                adapter.notifyDataSetChanged();
+                return true;
             }
         });
+
+
+
     }
     private MySQLite db;
     private ArrayList<String> target;
@@ -84,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
             adapter.changeCursor(db.lista());
             adapter.notifyDataSetChanged();
         }
+
     }
 
 
